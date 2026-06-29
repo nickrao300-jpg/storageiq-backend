@@ -1,26 +1,26 @@
-# StorageIQ Backend
+# StorageIQ — Deal Analyzer
 
-Vercel serverless proxy for the StorageIQ Deal Analyzer.
-Securely forwards document extraction requests to the Anthropic API.
+Self-storage deal analyzer with AI-powered document extraction.
 
 ## Setup
 
-### 1. Deploy to Vercel
-- Push this repo to GitHub
-- Import it in Vercel (vercel.com/new)
-- Vercel will auto-detect and deploy it
+### 1. Create GitHub repo
+Create a new repo called `storageiq-app` and upload all these files.
 
-### 2. Add your Anthropic API key
-In Vercel dashboard:
-- Go to your project → Settings → Environment Variables
-- Add: `ANTHROPIC_API_KEY` = your key from console.anthropic.com
-- Redeploy
+### 2. Deploy to Vercel
+- Import `storageiq-app` repo in Vercel
+- Add environment variable: `VITE_API_URL` = `https://storageiq-backend.vercel.app`
+- Deploy
 
-### 3. Copy your Vercel URL
-It will look like: `https://storageiq-backend.vercel.app`
+### 3. Open your app
+Visit your Vercel URL — e.g. `https://storageiq-app.vercel.app`
 
-### 4. Paste it into StorageIQ
-In the StorageIQ artifact, enter your Vercel URL when prompted.
-
-## API
-`POST /api/extract` — proxies requests to Anthropic claude-sonnet-4-6
+## Features
+- Deal pipeline dashboard
+- Buy Box criteria checker
+- Kill Switch (REIT, MHI, Crime, Flood Zone)
+- 100-point scorecard with live scoring
+- Offer multiple calculator
+- AI document extraction (PDF, Word, Excel, Images)
+- Market intel tracking
+- Deal persistence via localStorage
