@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+useState, useMemo, useRef, useCallback, useEffect } from "react";
 import * as XLSX from "xlsx";
 
 // ── Scoring engine ────────────────────────────────────────────────────────────
