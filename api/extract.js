@@ -1,18 +1,31 @@
 export default async function handler(req, res) {
-  // Allow requests from anywhere (Claude artifact, browser, etc.)
+  // Explicit CORS — allow all origins
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Max-Age", "86400");
 
   // Handle preflight
   if (req.method === "OPTIONS") return res.status(200).end();
+
+  // GET — health check so we can test the URL in a browser
+  if (req.method === "GET") {
+    return res.status(200).json({ status: "ok", message: "StorageIQ API is running" });
+  }
+
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return res.status(500).json({ error: "ANTHROPIC_API_KEY not configured in Vercel environment variables" });
+  if (!apiKey) {
+    return res.status(500).json({ error: "ANTHROPIC_API_KEY not set in Vercel Environment Variables" });
+  }
 
   try {
     const { messages, max_tokens = 1500 } = req.body;
+
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: "Missing or invalid messages array" });
+    }
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
